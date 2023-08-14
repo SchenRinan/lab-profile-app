@@ -1,0 +1,23 @@
+.Homepage{
+    padding: 50px;
+    width: 40%;
+    color: #638165;
+}
+
+.Homepage h2, h3{
+    margin: 0;
+}
+
+.Homepage h3{
+    font-weight: lighter;
+    padding: 30px 0;
+}
+
+.Homepage button{
+    padding: 10px;
+    margin: 10px 30px;
+    background-color: #C1DFC4;
+    width: 70%;
+    border-style: none;
+    border-radius: 3px;
+}

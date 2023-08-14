@@ -7,8 +7,8 @@ const bcrypt = require("bcrypt");
 // ℹ️ Handles password encryption
 const jwt = require("jsonwebtoken");
 
-//allow multi part (for image upload)
-const multipart = require('connect-multiparty');
+// //allow multi part (for image upload)
+// const multipart = require('connect-multiparty');
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
