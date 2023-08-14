@@ -7,6 +7,9 @@ const bcrypt = require("bcrypt");
 // ℹ️ Handles password encryption
 const jwt = require("jsonwebtoken");
 
+//allow multi part (for image upload)
+const multipart = require('connect-multiparty');
+
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
@@ -126,5 +129,20 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   // Send back the token payload object containing the user data
   res.status(200).json(req.payload);
 });
+
+//put image on respected user
+router.put('/users', isAuthenticated, (req, res, next) => {
+  User.findByIdAndUpdate(req.payload._id, {image: req.body.image})
+    .then(userUpdated=> res.status(200).json(userUpdated))
+    .catch((err) => next(err))
+});
+
+// //upload image using form-data
+// router.post('/upload', isAuthenticated, (req, res, next) => {
+//   // const formData = new FormData();
+//   // formData.append('imageURL', req.body.imageURL)
+//   console.log(req.body)
+//   res.status(200).json({message: 'testing parameters'});
+// });
 
 module.exports = router;
