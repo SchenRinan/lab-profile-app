@@ -1,18 +1,42 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css'
+import { useContext, useState } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../context/auth.context';
 
-const login = () => {
+const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(undefined);
+
+    const { storeToken, authenticateUser, user } = useContext(AuthContext);
+    const navigate = useNavigate();
+    
+    const handleButton = e => {
+        e.preventDefault();
+        axios.post('http://localhost:5005/auth/login',{
+            username, password
+        })
+        .then(response => {
+            storeToken(response.data.authToken);
+            authenticateUser();
+            navigate(`/${user._id}`)
+        })
+        .catch(err => setErrorMessage(err.response.data.message))
+    }
+    
     return (
         <div className="Signup">
             <div className="column">
                 <h2>Log In</h2>
                 <form>
                     <label htmlFor="username">Username</label>
-                    <input type="text" name="username" id="" required />
+                    <input type="text" name="username" id="" required onChange={e=>setUsername(e.target.value)}/>
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" id="" required />
+                    <input type="password" name="password" id="" required onChange={e=>setPassword(e.target.value)}/>
                 </form>
                 <p>If you don't have an account yet, you can create your account <Link to='/signup'>here</Link>.</p>
+                {errorMessage && errorMessage}
             </div>
             <div className="column row">
                 <div className="row">
@@ -23,11 +47,11 @@ const login = () => {
                     <p>
                         If you signup, you agree with all our terms and conditions where we can do whatever we want with the data!
                     </p>
-                    <button>Log In</button>
+                    <button onClick={handleButton}>Log In</button>
                 </div>
             </div>
         </div>
     );
 }
  
-export default login;
+export default Login;

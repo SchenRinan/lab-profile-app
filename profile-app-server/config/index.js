@@ -8,7 +8,9 @@ const logger = require("morgan");
 // ℹ️ Needed when we deal with cookies (we will when dealing with authentication)
 // https://www.npmjs.com/package/cookie-parser
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
+const multer  = require('multer')
+const upload = multer();
 
 // ℹ️ Needed to accept requests from 'the outside'. CORS stands for cross origin resource sharing
 // unless the request is made from the same domain, by default express wont accept POST requests
@@ -36,6 +38,7 @@ module.exports = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(upload.any());
+  // app.use(bodyParser.json());
+  // app.use(bodyParser.urlencoded({ extended: true }));
 };
