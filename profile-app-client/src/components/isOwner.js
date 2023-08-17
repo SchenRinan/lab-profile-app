@@ -7,7 +7,7 @@ function IsOwner ({children}) {
     const { _id } = useParams();
 
     if (isLoading) return <p>Loading ...</p>;
-    if(user._id === _id) {;return children;}
+    if(user && user._id === _id){return children}
     else {return <Navigate to='/'/>}
 }
  

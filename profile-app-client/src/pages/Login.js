@@ -22,7 +22,7 @@ const Login = () => {
             authenticateUser();
             navigate(`/${user._id}`)
         })
-        .catch(err => setErrorMessage(err.response.data.message))
+        .catch(err => {if(err.response){setErrorMessage(err.response.data.message)}})
     }
     
     return (
